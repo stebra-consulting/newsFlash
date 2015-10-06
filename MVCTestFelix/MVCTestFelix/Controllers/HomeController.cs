@@ -10,6 +10,7 @@ namespace MVCTestFelix.Controllers
     {
         public string Index()
         {
+            string nu = "kom igen funka";
             return "Hello world";
         }
     }
