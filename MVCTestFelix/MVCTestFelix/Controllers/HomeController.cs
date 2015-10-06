@@ -10,7 +10,7 @@ namespace MVCTestFelix.Controllers
     {
         public string Index()
         {
-            return "Hello owlrd";
+            return "Hello world";
         }
     }
 }
