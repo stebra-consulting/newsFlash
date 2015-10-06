@@ -10,6 +10,12 @@ namespace MVCTestFelix.Controllers
     {
         public string Index()
         {
+            int t1 = 54;
+            int t2 = 123;
+            if (t1 < t2)
+            {
+
+            }
             string nu = "kom igen funka";
             return "Hello world";
         }
