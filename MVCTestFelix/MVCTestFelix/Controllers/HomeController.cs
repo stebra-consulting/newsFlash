@@ -10,13 +10,7 @@ namespace MVCTestFelix.Controllers
     {
         public string Index()
         {
-            int high = 56;
-            int low = 4;
-            if (high > low) {
-                string message = "high is bigger than low";
-            }
-            string nu = "kom igen funka";
-            return "Hello world";
+            return "hello there i removed all code whoops!";
         }
     }
 }
