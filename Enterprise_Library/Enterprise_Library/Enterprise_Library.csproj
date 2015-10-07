@@ -459,15 +459,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Blocks\Common\" />
-    <Folder Include="Blocks\Configuration\" />
-    <Folder Include="Blocks\Data\" />
-    <Folder Include="Blocks\ExceptionHandling\" />
-    <Folder Include="Blocks\Logging\" />
-    <Folder Include="Blocks\PolicyInjection\" />
-    <Folder Include="Blocks\SemanticLogging\" />
-    <Folder Include="Blocks\TransientFaultHandling\" />
-    <Folder Include="Blocks\Validation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
