@@ -17,11 +17,14 @@ namespace MVCTestFelix.Controllers
             }
             int t1 = 54;
             int t2 = 123;
+            int t3 = 0;
+
+            string nu = "kom igen funka";
             if (t1 < t2)
             {
-
+                nu = "kom igen funka inte";
             }
-            string nu = "kom igen funka";
+           
             return "Hello world";
         }
     }
