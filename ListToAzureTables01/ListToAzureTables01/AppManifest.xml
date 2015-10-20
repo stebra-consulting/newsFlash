@@ -3,7 +3,7 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="ListToAzureTables01"
      ProductID="{2ca62359-2d33-4e97-97d6-8a64f8fc9aa4}"
-     Version="1.0.0.0"
+     Version="1.0.0.6"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
@@ -14,4 +14,7 @@
   <AppPrincipal>
     <RemoteWebApplication ClientId="*" />
   </AppPrincipal>
+  <AppPermissionRequests>
+    <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="Read" />
+  </AppPermissionRequests>
 </App>
