@@ -3,12 +3,14 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="ListToAzureTables01"
      ProductID="{2ca62359-2d33-4e97-97d6-8a64f8fc9aa4}"
-     Version="1.0.0.6"
+     Version="1.0.0.7"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
     <Title>ListToAzureTables01</Title>
     <StartPage>~remoteAppUrl/?{StandardTokens}</StartPage>
+    <InstalledEventEndpoint>~remoteAppUrl/Services/AppEventReceiver.svc</InstalledEventEndpoint>
+    <UninstallingEventEndpoint>~remoteAppUrl/Services/AppEventReceiver.svc</UninstallingEventEndpoint>
   </Properties>
 
   <AppPrincipal>

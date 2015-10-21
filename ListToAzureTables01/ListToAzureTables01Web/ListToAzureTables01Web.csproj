@@ -215,9 +215,6 @@
     <Compile Include="Models\GlobalVar.cs" />
     <Compile Include="Models\StebraEnitity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AppEventReceiver.svc.cs">
-      <DependentUpon>AppEventReceiver.svc</DependentUpon>
-    </Compile>
     <Compile Include="Services\RemoteEventReceiver1.svc.cs">
       <DependentUpon>RemoteEventReceiver1.svc</DependentUpon>
     </Compile>
@@ -246,7 +243,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spcontext.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Services\AppEventReceiver.svc" />
     <Content Include="Services\RemoteEventReceiver1.svc" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
