@@ -7,6 +7,6 @@ namespace NewProjectKirk1Web.Models
 {
     public static class Global
     {
-        public static bool gotList { get; set; }
+        public static int globalX { get; set; }
     }
 }

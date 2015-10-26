@@ -6,15 +6,20 @@ using System.Web;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure;
+using System.Configuration;
+using NewProjectKirk1Web.Models;
 
 namespace NewProjectKirk1Web
 {
     public class RemoteEventReceiverManager
     {
+        public string hello = "";
         private const string RECEIVER_NAME = "ItemAddedEvent";
-        private const string LIST_TITLE = "TestList2";
+        private const string LIST_TITLE = "TestList3";
+        
 
         public void AssociateRemoteEventsToHostWeb(ClientContext clientContext)
         {
@@ -58,8 +63,9 @@ namespace NewProjectKirk1Web
             bool rerExists = false;
             if (null == jobsList)
             {
+                
                 //List does not exist, create it
-                jobsList = CreateJobsList(clientContext);
+               jobsList = CreateJobsList(clientContext);
 
             }
             else
@@ -77,6 +83,7 @@ namespace NewProjectKirk1Web
 
             if (!rerExists)
             {
+
                 EventReceiverDefinitionCreationInformation receiver =
                     new EventReceiverDefinitionCreationInformation();
                 receiver.EventType = EventReceiverType.ItemAdded;
@@ -93,8 +100,68 @@ namespace NewProjectKirk1Web
                 jobsList.EventReceivers.Add(receiver);
                 clientContext.ExecuteQuery();
 
+               
                 System.Diagnostics.Trace.WriteLine("Added ItemAdded receiver at " + receiver.ReceiverUrl);
+                
             }
+            FirstTimeInstall(clientContext);
+        }
+
+        public void FirstTimeInstall(ClientContext clientContext)
+        {
+            List nyhetsLista = clientContext.Web.Lists.GetByTitle(LIST_TITLE);
+
+            CamlQuery camlQuery = new CamlQuery();
+            camlQuery.ViewXml = "<View><Query><Where><IsNotNull><FieldRef Name='Title'/>" +
+                "</IsNotNull></Where></Query></View>";
+            ListItemCollection items = nyhetsLista.GetItems(camlQuery);
+
+           
+            clientContext.Load(items);
+            clientContext.ExecuteQuery();
+
+           
+            //foreach (ListItem item in items)
+            //{
+            if (Global.globalX != items.Count)
+            {
+                var storageAccount = CloudStorageAccount.Parse(
+                   CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+                var client = storageAccount.CreateCloudTableClient();
+
+                var stebraTable = client.GetTableReference("StebraNyhetsList");
+
+                if (!stebraTable.Exists())
+                {
+                    stebraTable.Create();
+                }
+                int i = 0;
+                
+                for (i = 0; i < items.Count; i++)
+                {
+
+                    ListItem item = items[i];
+                    string itemTitle = item["Title"].ToString();
+                    string itemDesc = item["Description"].ToString();
+                    string itemArticle = item["Article"].ToString();
+                    string itemDate = item["Date"].ToString();
+                    hello += itemTitle + itemDesc + itemArticle + itemDate;
+
+
+                    var newsEntry = new StebraEntity("Nyhet", itemTitle, itemDesc, itemArticle, itemDate);
+
+                    var batchOperation = TableOperation.InsertOrReplace(newsEntry);
+                    stebraTable.Execute(batchOperation);
+
+                    Global.globalX++;
+                }
+
+                
+                
+            }
+           
+            
         }
 
         public void RemoveEventReceiversFromHostWeb(ClientContext clientContext)
@@ -137,38 +204,34 @@ namespace NewProjectKirk1Web
         {
             try
             {
-                List photos = clientContext.Web.Lists.GetById(listId);
-                ListItem item = photos.GetItemById(listItemId);
+                List news = clientContext.Web.Lists.GetById(listId);
+                ListItem item = news.GetItemById(listItemId);
                 clientContext.Load(item);
                 clientContext.ExecuteQuery();
 
-                string azureTitle = item["Title"].ToString();
-                string azureDesc = item["Description"].ToString();
-
+                string itemTitle = item["Title"].ToString();
+                string itemDesc = item["Description"].ToString();
+                string itemArticle = item["Article"].ToString();
+                string itemDate = item["Date"].ToString();
 
                 var storageAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
                 var client = storageAccount.CreateCloudTableClient();
 
-                var stebraTable = client.GetTableReference("StebraList");
+                var stebraTable = client.GetTableReference("StebraNyhetsList");
 
                 if (!stebraTable.Exists())
                 {
                     stebraTable.Create();
                 }
 
-                var awesomeStebra = new StebraEntity("WeAreStebra", azureTitle);
-                awesomeStebra.Description = azureDesc;
-
-                var batchOperation = new TableBatchOperation();
-                batchOperation.Insert(awesomeStebra);
-                stebraTable.ExecuteBatch(batchOperation);
+                var newsEntry = new StebraEntity("Nyhet", itemTitle, itemDesc, itemArticle, itemDate);
                 
-                item["Description"] += "\nUpdated by RER " +
-                    System.DateTime.Now.ToLongTimeString();
-                item.Update();
-                clientContext.ExecuteQuery();
+                var batchOperation = new TableBatchOperation();
+                batchOperation.Insert(newsEntry);
+                stebraTable.ExecuteBatch(batchOperation);
+              
             }
             catch (Exception oops)
             {
@@ -182,6 +245,7 @@ namespace NewProjectKirk1Web
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
+        /// 
         internal List CreateJobsList(ClientContext context)
         {
 
@@ -194,7 +258,10 @@ namespace NewProjectKirk1Web
             list.Fields.AddFieldAsXml("<Field DisplayName='Description' Type='Text' />",
                 true,
                 AddFieldOptions.DefaultValue);
-            list.Fields.AddFieldAsXml("<Field DisplayName='AssignedTo' Type='Text' />",
+            list.Fields.AddFieldAsXml("<Field DisplayName='Article' Type='Text' />",
+               true,
+               AddFieldOptions.DefaultValue);
+            list.Fields.AddFieldAsXml("<Field DisplayName='Date' Type='Text' />",
                 true,
                 AddFieldOptions.DefaultValue);
 
