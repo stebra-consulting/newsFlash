@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MRPNewsFlashWeb.Models;
 
 namespace MRPNewsFlashWeb.Controllers
 {
@@ -40,6 +41,12 @@ namespace MRPNewsFlashWeb.Controllers
                     clientContext.Load(items);
                     clientContext.ExecuteQuery();
 
+                    //Create a new Azure Table for this app, uses connection string from Web.Config
+                    AzureTableManager.SelectTable();
+
+                    //Save the ListItems to AzureTable as StebraEntities
+                    AzureTableManager.SaveNews(items);
+
                     return View(); //check items
                 }
             }
@@ -49,9 +56,9 @@ namespace MRPNewsFlashWeb.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            IEnumerable<StebraEntity> news = AzureTableManager.LoadAllNews();
 
-            return View();
+            return View(news);
         }
 
         public ActionResult Contact()

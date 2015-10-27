@@ -1,7 +1,10 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model IEnumerable<MRPNewsFlashWeb.Models.StebraEntity>
 
-<p>Use this area to provide additional information.</p>
+@foreach (var stebra in Model)
+{
+    <div class="jumbotron">
+        <h4>@stebra.RowKey</h4>
+        <p><i>@Html.Raw(stebra.Article)</i></p>
+        <p>@Html.Raw(stebra.Body)</p>
+    </div>
+}
