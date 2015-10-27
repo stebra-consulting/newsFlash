@@ -12,21 +12,35 @@ namespace MRPNewsFlashWeb.Controllers
         [SharePointContextFilter]
         public ActionResult Index()
         {
-            User spUser = null;
 
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
                 if (clientContext != null)
                 {
-                    spUser = clientContext.Web.CurrentUser;
-
-                    clientContext.Load(spUser, user => user.Title);
-
+                    //get listdata from sharepoint
+                    List spNewsList = clientContext.Web.Lists.GetByTitle("Nyhetslista");
+                    clientContext.Load(spNewsList);
                     clientContext.ExecuteQuery();
 
-                    ViewBag.UserName = spUser.Title;
+                    //get all listitems that has a title-column
+                    CamlQuery camlQuery = new CamlQuery();
+                    camlQuery.ViewXml = @"
+                                        <View>
+                                            <Query>
+                                                <Where>
+                                                    <IsNotNull>
+                                                        <FieldRef Name='Title' />
+                                                    </IsNotNull>
+                                                </Where>
+                                            </Query>
+                                        </View>";
+                    ListItemCollection items = spNewsList.GetItems(camlQuery);
+
+                    clientContext.Load(items);
+                    clientContext.ExecuteQuery();
+
+                    return View(); //check items
                 }
             }
 
