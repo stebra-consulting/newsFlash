@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.EventReceivers;
+using NewProjectKirk1Web.Models;
+using System.Security;
 
 namespace NewProjectKirk1Web.Services
 {
@@ -12,9 +14,9 @@ namespace NewProjectKirk1Web.Services
 
         public SPRemoteEventResult ProcessEvent(SPRemoteEventProperties properties)
         {
-
+            Global.globalError1 += "Hello World";
             SPRemoteEventResult result = new SPRemoteEventResult();
-
+          
             switch (properties.EventType)
             {
                 case SPRemoteEventType.AppInstalled:
@@ -35,7 +37,7 @@ namespace NewProjectKirk1Web.Services
 
         public void ProcessOneWayEvent(SPRemoteEventProperties properties)
         {
-
+            Global.globalError1 += "Hello World1";
         }
 
 
@@ -49,14 +51,14 @@ namespace NewProjectKirk1Web.Services
         /// <param name="properties"></param>
         private void HandleAppInstalled(SPRemoteEventProperties properties)
         {
-            using (ClientContext clientContext =
-                TokenHelper.CreateAppEventClientContext(properties, false))
-            {
-                if (clientContext != null)
-                {
-                    new RemoteEventReceiverManager().AssociateRemoteEventsToHostWeb(clientContext);
-                }
-            }
+            //using (ClientContext clientContext =
+            //    TokenHelper.CreateAppEventClientContext(properties, false))
+            //{
+            //    if (clientContext != null)
+            //    {
+            //        new RemoteEventReceiverManager().AssociateRemoteEventsToHostWeb(clientContext);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -83,17 +85,37 @@ namespace NewProjectKirk1Web.Services
         /// <param name="properties"></param>
         private void HandleItemAdded(SPRemoteEventProperties properties)
         {
-            using (ClientContext clientContext =
-                TokenHelper.CreateRemoteEventReceiverClientContext(properties))
-            {
+            Global.globalError1 += "☻ Added New World To Hello ☻ ";
+            ClientContext clientContext =
+                TokenHelper.CreateRemoteEventReceiverClientContext(properties);//this is null...
+            
                 if (clientContext != null)
                 {
                     new RemoteEventReceiverManager().ItemAddedToListEventHandler(clientContext, properties.ItemEventProperties.ListId, properties.ItemEventProperties.ListItemId);
                 }
+                
+                else if (clientContext == null)
+                {
+                    clientContext = new ClientContext("https://stebra.sharepoint.com/sites/sd1");
+
+                    if (clientContext != null)
+                        {
+                    
+                        string userName = "simon.bergqvist@stebra.se";
+
+                        SecureString passWord = new SecureString();
+                        string passStr = "Simoon123";
+                        foreach (char c in passStr.ToCharArray()) passWord.AppendChar(c);
+
+                        clientContext.Credentials = new SharePointOnlineCredentials(userName, passWord);
+
+                        new RemoteEventReceiverManager().ItemAddedToListEventHandler(clientContext, properties.ItemEventProperties.ListId, properties.ItemEventProperties.ListItemId);
+                        }
+                }
+
+            //☻
 
             }
-
-        }
 
 
     }

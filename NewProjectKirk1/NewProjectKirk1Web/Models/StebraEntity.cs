@@ -15,17 +15,17 @@ namespace NewProjectKirk1Web
         public StebraEntity()
         { }
         public StebraEntity(string StebraType, string NewsEntry,
-            string NewsDescription, string NewsArticle, string NewsDate)
+            string NewsBody, string NewsArticle, string NewsDate)
         {
             this.PartitionKey = StebraType;
             this.RowKey = NewsEntry;
             this.Title = NewsEntry;
-            this.Description = NewsDescription;
+            this.Body = NewsBody;
             this.Article = NewsArticle;
             this.Date = NewsDate;
         }
  
-        public string Description { get; set; }
+        public string Body { get; set; }
         public string Article { get; set; }
         public string Title { get; set; }
         public string Date { get; set; }

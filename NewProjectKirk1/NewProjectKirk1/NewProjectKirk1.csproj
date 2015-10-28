@@ -22,6 +22,7 @@
     <WorkflowPartId>{4486f489-2bea-4bfe-8ff5-24d1c0fe8a12}</WorkflowPartId>
     <CspkgPartId>{54ca8620-6c86-414f-9ef9-8d209d94ac7e}</CspkgPartId>
     <SqlPackagePartId>{2b1c2e63-e980-425a-be38-4df129fb1572}</SqlPackagePartId>
+    <ActivePublishProfile>Kirking - Web Deploy</ActivePublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

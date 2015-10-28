@@ -3,13 +3,14 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="NewProjectKirk1"
      ProductID="{a639095b-7f9e-4ec8-abda-da02771cbc66}"
-     Version="1.0.0.1"
+     Version="1.0.0.4"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
     <Title>NewProjectKirk1</Title>
     <StartPage>~remoteAppUrl/?{StandardTokens}</StartPage>
     <InstalledEventEndpoint>~remoteAppUrl/Services/AppEventReceiver.svc</InstalledEventEndpoint>
+    <UninstallingEventEndpoint>~remoteAppUrl/Services/AppEventReceiver.svc</UninstallingEventEndpoint>
   </Properties>
 
   <AppPrincipal>

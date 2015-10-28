@@ -16,13 +16,16 @@ namespace NewProjectKirk1Web
 {
     public class RemoteEventReceiverManager
     {
-        public string hello = "";
         private const string RECEIVER_NAME = "ItemAddedEvent";
-        private const string LIST_TITLE = "TestList3";
+        private const string LIST_TITLE = "TestList4";
         
 
         public void AssociateRemoteEventsToHostWeb(ClientContext clientContext)
         {
+            if (Global.globalY != 1)
+            {
+
+                Global.globalError += "28-";
             //Add Push Notification Feature to HostWeb
             //Not required here, just a demonstration that you
             //can activate features.
@@ -30,17 +33,17 @@ namespace NewProjectKirk1Web
                      new Guid("41e1d4bf-b1a2-47f7-ab80-d5d6cbba3092"),
                      true, FeatureDefinitionScope.None);
 
-
-            //Get the Title and EventReceivers lists
-            clientContext.Load(clientContext.Web.Lists,
+                Global.globalError += "36-";
+                //Get the Title and EventReceivers lists
+                clientContext.Load(clientContext.Web.Lists,
                 lists => lists.Include(
                     list => list.Title,
                     list => list.EventReceivers).Where
                         (list => list.Title == LIST_TITLE));
 
             clientContext.ExecuteQuery();
-
-            List jobsList = clientContext.Web.Lists.FirstOrDefault();
+                Global.globalError += "45-";
+                List jobsList = clientContext.Web.Lists.FirstOrDefault();
 
 #if (DEBUG)
             // In debug mode we will delete the existing list, so we prevent our system from orphaned event receicers.
@@ -59,15 +62,16 @@ namespace NewProjectKirk1Web
                 jobsList = null;
             }
 #endif
-
-            bool rerExists = false;
+                Global.globalError += "65-";
+                bool rerExists = false;
             if (null == jobsList)
             {
-                
-                //List does not exist, create it
-               jobsList = CreateJobsList(clientContext);
 
-            }
+                //List does not exist, create it
+                jobsList = CreateJobsList(clientContext);
+                    Global.globalError += "72-";
+                }
+                
             else
             {
                 foreach (var rer in jobsList.EventReceivers)
@@ -80,31 +84,36 @@ namespace NewProjectKirk1Web
                     }
                 }
             }
-
-            if (!rerExists)
+                Global.globalError += "87-";
+                if (!rerExists)
             {
 
                 EventReceiverDefinitionCreationInformation receiver =
                     new EventReceiverDefinitionCreationInformation();
                 receiver.EventType = EventReceiverType.ItemAdded;
 
-                //Get WCF URL where this message was handled
-                System.ServiceModel.OperationContext op = System.ServiceModel.OperationContext.Current;
-                Message msg = op.RequestContext.RequestMessage;
-                receiver.ReceiverUrl = msg.Headers.To.ToString();
+                    //Get WCF URL where this message was handled
+                    //System.ServiceModel.OperationContext op = System.ServiceModel.OperationContext.Current;
+                    //Message msg = op.RequestContext.RequestMessage;
+                    //receiver.ReceiverUrl = msg.Headers.To.ToString();
 
-                receiver.ReceiverName = RECEIVER_NAME;
+                    receiver.ReceiverUrl = "https://serviceberra.servicebus.windows.net/314700446/821505743/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc";
+                    Global.globalError += "101";
+                    receiver.ReceiverName = RECEIVER_NAME;
                 receiver.Synchronization = EventReceiverSynchronization.Synchronous;
 
                 //Add the new event receiver to a list in the host web
                 jobsList.EventReceivers.Add(receiver);
                 clientContext.ExecuteQuery();
 
-               
-                System.Diagnostics.Trace.WriteLine("Added ItemAdded receiver at " + receiver.ReceiverUrl);
-                
+                    Global.globalError += "109-";
+                    Global.globalError += (" Added ItemAdded receiver at " + receiver.ReceiverUrl + " - " + "https://serviceberra.servicebus.windows.net/314700446/821505743/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc");
+
             }
-            FirstTimeInstall(clientContext);
+                Global.globalY++;
+                
+                FirstTimeInstall(clientContext);
+            }
         }
 
         public void FirstTimeInstall(ClientContext clientContext)
@@ -143,13 +152,12 @@ namespace NewProjectKirk1Web
 
                     ListItem item = items[i];
                     string itemTitle = item["Title"].ToString();
-                    string itemDesc = item["Description"].ToString();
+                    string itemBody = item["Body"].ToString();
                     string itemArticle = item["Article"].ToString();
                     string itemDate = item["Date"].ToString();
-                    hello += itemTitle + itemDesc + itemArticle + itemDate;
 
 
-                    var newsEntry = new StebraEntity("Nyhet", itemTitle, itemDesc, itemArticle, itemDate);
+                    var newsEntry = new StebraEntity("Nyhet", itemTitle, itemBody, itemArticle, itemDate);
 
                     var batchOperation = TableOperation.InsertOrReplace(newsEntry);
                     stebraTable.Execute(batchOperation);
@@ -193,7 +201,7 @@ namespace NewProjectKirk1Web
             ListItemCreationInformation itemCreateInfo = new ListItemCreationInformation();
             ListItem newItem = myList.AddItem(itemCreateInfo);
             newItem["Title"] = "App deleted";
-            newItem["Description"] = "Deleted on " + System.DateTime.Now.ToLongTimeString();
+            newItem["Body"] = "Deleted on " + System.DateTime.Now.ToLongTimeString();
             newItem.Update();
 
             clientContext.ExecuteQuery();
@@ -210,7 +218,7 @@ namespace NewProjectKirk1Web
                 clientContext.ExecuteQuery();
 
                 string itemTitle = item["Title"].ToString();
-                string itemDesc = item["Description"].ToString();
+                string itemBody = item["Body"].ToString();
                 string itemArticle = item["Article"].ToString();
                 string itemDate = item["Date"].ToString();
 
@@ -226,18 +234,20 @@ namespace NewProjectKirk1Web
                     stebraTable.Create();
                 }
 
-                var newsEntry = new StebraEntity("Nyhet", itemTitle, itemDesc, itemArticle, itemDate);
+                var newsEntry = new StebraEntity("Nyhet", itemTitle, itemBody, itemArticle, itemDate);
                 
                 var batchOperation = new TableBatchOperation();
                 batchOperation.Insert(newsEntry);
                 stebraTable.ExecuteBatch(batchOperation);
-              
+                Global.globalError += "242-";
             }
+
             catch (Exception oops)
             {
                 System.Diagnostics.Trace.WriteLine(oops.Message);
+                Global.globalError += "248-";
             }
-
+            Global.globalError += "250-";
         }
 
         /// <summary>
@@ -255,7 +265,7 @@ namespace NewProjectKirk1Web
             creationInfo.TemplateType = (int)ListTemplateType.GenericList;
             List list = context.Web.Lists.Add(creationInfo);
             list.Description = "List of jobs and assignments";
-            list.Fields.AddFieldAsXml("<Field DisplayName='Description' Type='Text' />",
+            list.Fields.AddFieldAsXml("<Field DisplayName='Body' Type='Text' />",
                 true,
                 AddFieldOptions.DefaultValue);
             list.Fields.AddFieldAsXml("<Field DisplayName='Article' Type='Text' />",
