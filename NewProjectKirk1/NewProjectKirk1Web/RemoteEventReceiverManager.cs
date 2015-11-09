@@ -97,7 +97,11 @@ namespace NewProjectKirk1Web
                     //Message msg = op.RequestContext.RequestMessage;
                     //receiver.ReceiverUrl = msg.Headers.To.ToString();
 
-                    receiver.ReceiverUrl = "https://serviceberra.servicebus.windows.net/314700446/821505743/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc";
+                    //Simons Instance
+                    //receiver.ReceiverUrl = "https://serviceberra.servicebus.windows.net/314700446/821505743/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc";
+
+                    receiver.ReceiverUrl = "https://serviceberra.servicebus.windows.net/73036694/1885843836/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc";
+
                     Global.globalError += "101";
                     receiver.ReceiverName = RECEIVER_NAME;
                 receiver.Synchronization = EventReceiverSynchronization.Synchronous;
@@ -107,7 +111,7 @@ namespace NewProjectKirk1Web
                 clientContext.ExecuteQuery();
 
                     Global.globalError += "109-";
-                    Global.globalError += (" Added ItemAdded receiver at " + receiver.ReceiverUrl + " - " + "https://serviceberra.servicebus.windows.net/314700446/821505743/obj/d91500b0-1033-4876-bf0c-fa8a607e8eca/Services/AppEventReceiver.svc");
+                    Global.globalError += (" Added ItemAdded receiver at " + receiver.ReceiverUrl + " - ");
 
             }
                 Global.globalY++;

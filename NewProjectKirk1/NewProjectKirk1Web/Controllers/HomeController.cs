@@ -45,7 +45,7 @@ namespace NewProjectKirk1Web.Controllers
             //using (var clientContext = spContext.CreateUserClientContextForSPHost())
             //{ new RemoteEventReceiverManager().AssociateRemoteEventsToHostWeb(clientContext); }
             
-            ViewBag.RemoteEvent = "Hello " + Global.globalError + Global.globalError1;
+            ViewBag.RemoteEvent = " Hello globalError: " + Global.globalError + " \n globalError1: " + Global.globalError1;
             return View();
         }
 

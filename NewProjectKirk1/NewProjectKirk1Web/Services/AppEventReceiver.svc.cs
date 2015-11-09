@@ -83,6 +83,7 @@ namespace NewProjectKirk1Web.Services
         /// field of the item.
         /// </summary>
         /// <param name="properties"></param>
+        [SharePointContextFilter] //Added by Felix
         private void HandleItemAdded(SPRemoteEventProperties properties)
         {
             Global.globalError1 += "☻ Added New World To Hello ☻ ";
