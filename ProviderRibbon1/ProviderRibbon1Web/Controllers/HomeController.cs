@@ -92,8 +92,29 @@ namespace ProviderRibbon1Web.Controllers
                                 string itemArticle = listItem["Article"].ToString();
                                 string itemDate = listItem["Datum"].ToString();
 
+                                //Code for encoding 0365-Image
 
-                                var newsEntry = new StebraEntity("Nyhet", itemTitle, itemBody, itemArticle, itemDate);
+
+                                //if (itemBody.IndexOf("src=") != -1)
+                                //{
+                                //    Console.WriteLine("string contains dog!");
+                                //}
+
+                                if (itemBody.Contains("src="))
+                                {
+
+                                }
+
+                                //    string path = Server.MapPath("~/Content/20151002_113703.jpg");
+                                //    byte[] imageByteData = System.IO.File.ReadAllBytes(path);
+                                //    string imageBase64Data = Convert.ToBase64String(imageByteData);
+                                //    string imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
+
+                                //<div class="ExternalClass365B02E4C74248DF857E2FE109F0C8A0"><p>​Peter skriver till classer och views med viewdata istället för viewbag, det tycker vi på microsoft om.<img class="ms-rte-paste-setimagesize" alt="peter_okt.jpg" src="/sites/SD1/SiteAssets/Lists/Nyhetslista/AllItems/peter_okt.jpg" style="margin&#58;5px;width&#58;130px;height&#58;189px;" />​<br></p></div>
+
+
+
+                                    var newsEntry = new StebraEntity("Nyhet", itemTitle, itemBody, itemArticle, itemDate);
 
                                 var batchOperation = TableOperation.InsertOrReplace(newsEntry);
                                 stebraTable.Execute(batchOperation);
