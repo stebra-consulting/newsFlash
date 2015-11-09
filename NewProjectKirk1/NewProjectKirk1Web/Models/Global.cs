@@ -12,4 +12,12 @@ namespace NewProjectKirk1Web.Models
         public static string globalError { get; set; }
         public static string globalError1 { get; set; }
     }
+
+    public class mytest : iTest
+    {
+        public int equals(int number1, int number2)
+        {
+            return number1 + number2;
+        }
+    }
 }

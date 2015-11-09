@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9-->
+<App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
+     Name="Testing1"
+     ProductID="{9f3e8128-b8a9-423f-ae14-be53ac78733d}"
+     Version="1.0.0.4"
+     SharePointMinVersion="16.0.0.0"
+>
+  <Properties>
+    <Title>Testing1</Title>
+    <StartPage>https://testapp01ste.azurewebsites.net/?{StandardTokens}</StartPage>
+  </Properties>
+
+  <AppPrincipal>
+    <RemoteWebApplication ClientId="da776fd3-080a-413b-82eb-52aebf227034" />
+  </AppPrincipal>
+  <AppPermissionRequests AllowAppOnlyPolicy="true">
+    <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web/list" Right="Read" />
+  </AppPermissionRequests>
+</App>
