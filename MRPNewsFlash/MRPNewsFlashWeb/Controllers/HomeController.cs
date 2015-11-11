@@ -42,17 +42,20 @@ namespace MRPNewsFlashWeb.Controllers
             CloudBlockBlob blockBlob = container.GetBlockBlobReference("FromManager.jpg");
             //init azure blob
 
-
-            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista", HttpContext);
+            SPManager.CurrentHttpContext = HttpContext;
+            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
             string FileLeafRef = "peter_okt.jpg";
-            System.IO.Stream fileStream = SPManager.GetImage(FileLeafRef, HttpContext);
+            //System.IO.Stream fileStream = SPManager.GetImage(FileLeafRef, HttpContext);
 
+            using (var fileStream = SPManager.GetImage(FileLeafRef))
+            {
+                blockBlob.UploadFromStream(fileStream);
 
+            }
+            
+            //blockBlob.UploadFromStream(fileStream);
 
-
-            blockBlob.UploadFromStream(fileStream);
-
-            fileStream.Dispose();
+            //fileStream.Dispose();
 
 
             return View();

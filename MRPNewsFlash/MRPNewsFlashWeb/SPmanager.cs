@@ -9,11 +9,11 @@ namespace MRPNewsFlashWeb
 {
     public static class SPManager
     {
-
-        public static ListItemCollection GetItemCollection(string listName, HttpContextBase httpContext)
+        public static HttpContextBase CurrentHttpContext { get; set; }
+        public static ListItemCollection GetItemCollection(string listName)
         {
             ListItemCollection items = null;
-            var spContext = SharePointContextProvider.Current.GetSharePointContext(httpContext);
+            var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
                 if (clientContext != null)
@@ -44,10 +44,10 @@ namespace MRPNewsFlashWeb
             }
             return items;
         }
-        public static System.IO.Stream GetImage(string fileLeafRef, HttpContextBase httpContext)
+        public static System.IO.Stream GetImage(string fileLeafRef)
         {
             System.IO.Stream stream = null;
-            var spContext = SharePointContextProvider.Current.GetSharePointContext(httpContext);
+            var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
 
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
             {
