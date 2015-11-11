@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MRPNewsFlashWeb.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace MRPNewsFlashWeb.Controllers
 {
@@ -14,42 +17,43 @@ namespace MRPNewsFlashWeb.Controllers
         public ActionResult Index()
         {
 
-            var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-            using (var clientContext = spContext.CreateUserClientContextForSPHost())
-            {
-                if (clientContext != null)
-                {
-                    //get listdata from sharepoint
-                    List spNewsList = clientContext.Web.Lists.GetByTitle("Nyhetslista");
-                    clientContext.Load(spNewsList);
-                    clientContext.ExecuteQuery();
+            //coming from Publish Ribbon button
 
-                    //get all listitems that has a title-column
-                    CamlQuery camlQuery = new CamlQuery();
-                    camlQuery.ViewXml = @"
-                                        <View>
-                                            <Query>
-                                                <Where>
-                                                    <IsNotNull>
-                                                        <FieldRef Name='Title' />
-                                                    </IsNotNull>
-                                                </Where>
-                                            </Query>
-                                        </View>";
-                    ListItemCollection items = spNewsList.GetItems(camlQuery);
+            //Fetch all images from site assets as itemcollection use caml
+            //put in global variable
 
-                    clientContext.Load(items);
-                    clientContext.ExecuteQuery();
+            //fetch news as itemcollection from "nyhetslista"-list
 
-                    //Create a new Azure Table for this app, uses connection string from Web.Config
-                    AzureTableManager.SelectTable();
+            //check if each news contains image
+            //check if that image is public/0365
+            //upload 0365images to azblob
+            //replace img src attr in stebraentities.
 
-                    //Save the ListItems to AzureTable as StebraEntities
-                    AzureTableManager.SaveNews(items);
 
-                    return View(); //check items
-                }
-            }
+
+            //init azure blob
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            CloudBlobContainer container = blobClient.GetContainerReference("photos");
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference("FromManager.jpg");
+            //init azure blob
+
+
+            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista", HttpContext);
+            string FileLeafRef = "peter_okt.jpg";
+            System.IO.Stream fileStream = SPManager.GetImage(FileLeafRef, HttpContext);
+
+
+
+
+            blockBlob.UploadFromStream(fileStream);
+
+            fileStream.Dispose();
+
 
             return View();
         }
