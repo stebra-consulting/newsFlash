@@ -16,56 +16,29 @@ namespace MRPNewsFlashWeb.Controllers
         [SharePointContextFilter]
         public ActionResult Index()
         {
-
-            //coming from Publish Ribbon button
-
-            //Fetch all images from site assets as itemcollection use caml
-            //put in global variable
-
-            //fetch news as itemcollection from "nyhetslista"-list
-
-            //check if each news contains image
-            //check if that image is public/0365
-            //upload 0365images to azblob
-            //replace img src attr in stebraentities.
-
-
-
-            //init azure blob
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("photos");
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("FromManager.jpg");
-            //init azure blob
-
+            //Give SPManager HttpContext, (only avaible in this Controller)
             SPManager.CurrentHttpContext = HttpContext;
-            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
-            string FileLeafRef = "peter_okt.jpg";
-            //System.IO.Stream fileStream = SPManager.GetImage(FileLeafRef, HttpContext);
 
+            //GetItemCollection
+            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
+
+            //get Image from filename
+            string FileLeafRef = "peter_okt.jpg";
             using (var fileStream = SPManager.GetImage(FileLeafRef))
             {
-                blockBlob.UploadFromStream(fileStream);
-
+                //createBlob 
+                AzureManager.CreateBlob(fileStream, "ImageFromStream");
             }
-            
-            //blockBlob.UploadFromStream(fileStream);
-
-            //fileStream.Dispose();
-
 
             return View();
         }
 
         public ActionResult About()
         {
-            IEnumerable<StebraEntity> news = AzureTableManager.LoadAllNews();
+            //not yet implemented
+            //IEnumerable<StebraEntity> news = AzureTableManager.LoadAllNews();
 
-            return View(news);
+            return View();//news
         }
 
         public ActionResult Contact()

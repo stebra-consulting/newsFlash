@@ -44,9 +44,12 @@ namespace MRPNewsFlashWeb
             }
             return items;
         }
+
         public static System.IO.Stream GetImage(string fileLeafRef)
         {
             System.IO.Stream stream = null;
+
+
             var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
 
             using (var clientContext = spContext.CreateUserClientContextForSPHost())
@@ -79,12 +82,18 @@ namespace MRPNewsFlashWeb
                     ClientResult<System.IO.Stream> data = file.OpenBinaryStream();
 
                     clientContext.Load(file);
-                    clientContext.ExecuteQuery();//timeconsuming process?
 
-                    stream = data.Value;//timeconsuming process?
+                    clientContext.ExecuteQuery();
+
+                    stream = data.Value;
+
+                    //Wait for stream to get Executed by SharePoint
+                    bool isLong = false;
+                    while (isLong == false) { isLong = data.Value.Length is long; }
+                    //Wait for stream to get Executed by SharePoint
 
                 }
-                return stream; //call stream too fast in Controller and it throws error
+                return stream;
             }
 
         }
