@@ -9,6 +9,7 @@ namespace MRPNewsFlashWeb
 {
     public static class SPManager
     {
+        //It is required to set this property in order to use SPManager
         public static HttpContextBase CurrentHttpContext { get; set; }
 
         public static ListItemCollection GetItemsFromGuid(string listGuid) {

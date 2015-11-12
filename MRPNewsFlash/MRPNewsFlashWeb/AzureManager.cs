@@ -13,7 +13,7 @@ namespace MRPNewsFlashWeb
 {
     public class AzureManager
     {
-        //Configure target container / table
+        //Config
         const string containerName = "photos";
         const string tableName = "stebraNyhetslist";
 
@@ -21,17 +21,16 @@ namespace MRPNewsFlashWeb
         private static CloudStorageAccount StorageAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
-        //get Table -client  
-        public static CloudTableClient tableClient = StorageAccount.CreateCloudTableClient();
 
+        //BLOB SPECIFIC=========================================================================
         //get Blob -client
         public static CloudBlobClient blobClient = StorageAccount.CreateCloudBlobClient();
 
         //get Container
         public static CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
-        public static string ExportImage(System.IO.Stream stream, string blobName) { //returns url to blob
-
+        public static string ExportImage(System.IO.Stream stream, string blobName)
+        {
 
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
             blockBlob.UploadFromStream(stream);
@@ -42,72 +41,53 @@ namespace MRPNewsFlashWeb
 
         }
 
-        //CloudBlobContainer container = blobClient.GetContainerReference("photos");
+        //TABLE SPECIFIC=========================================================================
+        //get Table -client  
+        public static CloudTableClient tableClient = StorageAccount.CreateCloudTableClient();
 
-        
-        
-        //property that holds the apps Tablereference
-        //public static CloudTable NewsTable { get; set; }
+        public static void CreateTable(List<ListItem> stebraList)
+        {
+            CloudTable table = SelectTable();//make sure table is a clean slate
 
-        ////Create a new Azure Table for this App. workaround from having to wait to delete table with same name
-        //public static void SelectTable()
-        //{
-        //    int id = 0;
-        //    while (true)
-        //    {
-        //        var tempTable = tableClient.GetTableReference("NewsTable" + id.ToString()); //check this table
-        //        if (tempTable.Exists())
-        //        {
-        //            //tempTable.Delete(); //Delete tables manually for now. via serverexplorer in VS
-        //            id++;
-        //        }
-        //        else
-        //        {
-        //            tempTable.Create();
-        //            NewsTable = tempTable; //use this table
-        //            break;
-        //        }
-        //    }
-        //}
+            var batchOperation = new TableBatchOperation(); //make only one call to Azure Table, use Batch.
+            foreach (ListItem item in stebraList)
+            {
+                //Convert ListItems to Table-entries(Entity)
+                var entity = new StebraEntity(
+                    "Nyhet",                    //string Stebratype this is partitionKey
+                    item["Title"].ToString(),   //string newsEntry this will be used as rowKey
+                    "Descriptive text",         //string NewsDescription
+                    item["Article"].ToString(), //string NewsArticle
+                    item["Datum"].ToString(),   //string NewsDate
+                    item["Body"].ToString()     //string NewsBody
+                    );
 
-        ////save news to azure table from inparameter listItems
-        //public static void SaveNews(ListItemCollection listItems)
-        //{
+                batchOperation.Insert(entity); //Config Batch
+            }
+            table.ExecuteBatch(batchOperation); //make only one call to Azure Table, use Batch. this is that one call.
+        }
 
-        //    var batchOperation = new TableBatchOperation(); //make only one call to Azure Table, use Batch.
-        //    foreach (ListItem item in listItems)
-        //    {
-        //        //Convert ListItems to Table-entries(Entity)
-        //        var entity = new StebraEntity(
-        //            "News",                     //string Stebratype
-        //            item["Title"].ToString(),   //string newsEntry
-        //            "Descriptive text",         //string NewsDescription
-        //            item["Article"].ToString(), //string NewsArticle
-        //            item["Datum"].ToString(),   //string NewsDate
-        //            item["Body"].ToString()     //string NewsBody
-        //            );
-
-        //        batchOperation.Insert(entity); //Batch this
-        //    }
-        //    NewsTable.ExecuteBatch(batchOperation); //Execute Batch
-        //}
-
-        ////Load all news from Azure Table, return stebras
-        //public static IEnumerable<StebraEntity> LoadAllNews()
-        //{
-
-        //    //Query all entities where "PartitionKey" is "News"
-        //    var allNewsQuery = new TableQuery<StebraEntity>()
-        //        .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "News"));
-
-        //    //Entities to List
-        //    var stebras = NewsTable.ExecuteQuery(allNewsQuery).ToList();
-
-        //    //Return List
-        //    return stebras;
-
-        //}
-
-
+        public static CloudTable SelectTable()
+        {
+            CloudTable tempTable = null;
+            int id = 0;
+            while (true)//this does not feel entirely smooth.
+            {
+                tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
+                if (tempTable.Exists())
+                {
+                    tempTable.Delete(); //delete busy table
+                    id++;
+                }
+                else
+                {
+                    tempTable.Create();
+                    //Table = tempTable; //use this table
+                    break;
+                }
+            }
+            return tempTable;
+        }
     }
+
 }

@@ -31,17 +31,24 @@ namespace MRPNewsFlashWeb.Controllers
         }
 
         public ActionResult Publish()
-        {//catch Publish URL-Parameters
+        {//catch Ribbon action URL Parametr
 
             string listGuid = Request.QueryString["SPListId"];
 
             SPManager.CurrentHttpContext = HttpContext;
             ListItemCollection items = SPManager.GetItemsFromGuid(listGuid);
 
+            List<ListItem> stebraList = new List<ListItem>();
+
             foreach (ListItem item in items)
             {
-                ListItem scannedAndReplaced = StringScanner.ScanningListItem(item);
+                ListItem scannedItem = StringScanner.ScanningListItem(item);
+                stebraList.Add(scannedItem);
             }
+
+            AzureManager.CreateTable(stebraList);
+
+            //done
 
             return View();
         }
