@@ -30,11 +30,15 @@ namespace MRPNewsFlashWeb
         //get Container
         public static CloudBlobContainer container = blobClient.GetContainerReference(containerName);
 
-        public static void CreateBlob(System.IO.Stream stream, string blobName) {
+        public static string ExportImage(System.IO.Stream stream, string blobName) { //returns url to blob
 
 
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(blobName);
             blockBlob.UploadFromStream(stream);
+
+            string url = blockBlob.StorageUri.PrimaryUri.AbsoluteUri;
+
+            return url;
 
         }
 

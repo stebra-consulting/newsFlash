@@ -10,7 +10,43 @@ namespace MRPNewsFlashWeb
     public static class SPManager
     {
         public static HttpContextBase CurrentHttpContext { get; set; }
-        public static ListItemCollection GetItemCollection(string listName)
+
+        public static ListItemCollection GetItemsFromGuid(string listGuid) {
+
+            ListItemCollection items = null;
+
+            var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
+            using (var clientContext = spContext.CreateUserClientContextForSPHost())
+            {
+                if (clientContext != null)
+                {
+                    listGuid = listGuid.Replace("{", "").Replace("}", "");
+                    Guid guid = new Guid(listGuid);
+
+                    List list = clientContext.Web.Lists.GetById(guid);
+                    clientContext.Load(list);
+                    clientContext.ExecuteQuery();
+
+                    CamlQuery camlQuery = new CamlQuery();
+                    camlQuery.ViewXml = @"
+                                                <View>
+                                                    <Query>
+                                                        <Where>
+                                                            <IsNotNull>
+                                                                <FieldRef Name='Title' />
+                                                            </IsNotNull>
+                                                        </Where>
+                                                    </Query>
+                                                </View>";
+                    items = list.GetItems(camlQuery);
+
+                    clientContext.Load(items);
+                    clientContext.ExecuteQuery();
+                }
+            }
+            return items;
+        }
+        public static ListItemCollection GetItemsFromListName(string listName)
         {
             ListItemCollection items = null;
             var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
@@ -18,12 +54,10 @@ namespace MRPNewsFlashWeb
             {
                 if (clientContext != null)
                 {
-                    //get listdata from sharepoint
                     List list = clientContext.Web.Lists.GetByTitle(listName);
                     clientContext.Load(list);
                     clientContext.ExecuteQuery();
 
-                    //get all listitems that has a title-column
                     CamlQuery camlQuery = new CamlQuery();
                     camlQuery.ViewXml = @"
                                         <View>
@@ -38,17 +72,15 @@ namespace MRPNewsFlashWeb
                     items = list.GetItems(camlQuery);
 
                     clientContext.Load(items);
-                    clientContext.ExecuteQuery();
-                    
+                    clientContext.ExecuteQuery(); 
                 }
             }
             return items;
         }
 
-        public static System.IO.Stream GetImage(string fileLeafRef)
+        public static System.IO.Stream ImportImage(string fileLeafRef)
         {
             System.IO.Stream stream = null;
-
 
             var spContext = SharePointContextProvider.Current.GetSharePointContext(CurrentHttpContext);
 

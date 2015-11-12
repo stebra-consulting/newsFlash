@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.SharePoint.Client;
 
-namespace ProviderRibbon1Web.Models
+namespace MRPNewsFlashWeb
 {
     public class StringScanner
     {
@@ -44,9 +44,11 @@ namespace ProviderRibbon1Web.Models
                     string[] partsOfUrl = url.Split('/');                    //splits the url in to pieces example from sites/sd1/ = sites, sd1...
                     string fileName = partsOfUrl[partsOfUrl.Length - 1];     //last part of the url = filename 
 
-                    // System.IO.Stream importedFile = SPManager.ImportImage(fileName)   //return a file when throwing in filename into SPManager
 
-                    //string azureUrl = AzureManager.ExportImage(importedFile)     //return a url when throwing in a file into AzureManager
+
+                    System.IO.Stream importedFile = SPManager.ImportImage(fileName);   //return a file when throwing in filename into SPManager
+
+                    string azureUrl = AzureManager.ExportImage(importedFile, fileName);     //return a url when throwing in a file into AzureManager
                     //if (azureUrl != null)
                     //{
                     //      newColumn = ReplaceURLInColumn(url, azureUrl, column);

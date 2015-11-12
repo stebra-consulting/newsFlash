@@ -16,23 +16,35 @@ namespace MRPNewsFlashWeb.Controllers
         [SharePointContextFilter]
         public ActionResult Index()
         {
-            //Give SPManager HttpContext, (only avaible in this Controller)
-            SPManager.CurrentHttpContext = HttpContext;
+            
+            //SPManager.CurrentHttpContext = HttpContext;
+            //ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
 
-            //GetItemCollection
-            ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
-
-            //get Image from filename
-            string FileLeafRef = "peter_okt.jpg";
-            using (var fileStream = SPManager.GetImage(FileLeafRef))
-            {
-                //createBlob 
-                AzureManager.CreateBlob(fileStream, "ImageFromStream");
-            }
+            //string FileLeafRef = "peter_okt.jpg";
+            //using (var fileStream = SPManager.GetImage(FileLeafRef))
+            //{
+                
+            //    AzureManager.CreateBlob(fileStream, "ImageFromStream");
+            //}
 
             return View();
         }
 
+        public ActionResult Publish()
+        {//catch Publish URL-Parameters
+
+            string listGuid = Request.QueryString["SPListId"];
+
+            SPManager.CurrentHttpContext = HttpContext;
+            ListItemCollection items = SPManager.GetItemsFromGuid(listGuid);
+
+            foreach (ListItem item in items)
+            {
+                ListItem scannedAndReplaced = StringScanner.ScanningListItem(item);
+            }
+
+            return View();
+        }
         public ActionResult About()
         {
             //not yet implemented
