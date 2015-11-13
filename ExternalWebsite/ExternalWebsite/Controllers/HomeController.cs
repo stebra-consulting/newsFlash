@@ -35,37 +35,16 @@ namespace ExternalWebsite.Controllers
             //sort list descend by Dateprop
             news = news.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
 
-            //Make string item.Date sortable as an (int) and 
-            //TASK: update item date string to make it valid as an inParameter in Convert.ToDateTime() AND sortable as an int
-            //converts "08/11/2015 23:00:00" to "2015-11-08"
-            //foreach (var item in news)
-            //{
-            //    string ddmmyyyy_hhmmss = item.Date;
-
-            //    string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0]; 
-
-            //    string dd = ddmmyyyy.Split('/')[0];
-            //    string mm = ddmmyyyy.Split('/')[1];
-            //    string yyyy = ddmmyyyy.Split('/')[2];
-
-            //    string validyyyymmdd = yyyy +"-"+ mm +"-"+ dd;
-
-            //    item.Date = validyyyymmdd;
-
-            //}
-
-            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
-
-            //decrease mm by one
-
-            
             //today
+            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
+            
+            //todays Month
             string mmToday = yyyymmdd.Split('-')[1];
 
-            //todays Month
+            //Last Month
             string mmExpired = (int.Parse(mmToday) - 1).ToString();
 
-            //Date One Month Ago
+            //Date Last Month
             string expired = yyyymmdd.Replace(mmToday, mmExpired);
 
             //integer (Date One Month Ago)
