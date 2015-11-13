@@ -55,14 +55,8 @@ namespace ExternalWebsite.Controllers
 
             IEnumerable<StebraEntity> archivedNewsEnum = archivedNews;
 
-            //STILL DOES NOT WORK! arrrgh
-            //archivedNewsEnum = (from o in news where o.IntDate) < intExpired select o);
 
-            //Example from google
-            //var highScores = from student in students
-            //                 where student.ExamScores[exam] > score
-            //                 select new { Name = student.FirstName, Score = student.ExamScores[exam] };
-
+            archivedNewsEnum = (from o in news where o.IntDate <= intExpired select o);
 
             return View(archivedNewsEnum);
         }
