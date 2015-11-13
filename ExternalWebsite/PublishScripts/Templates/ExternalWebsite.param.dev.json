@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "ExternalWebsite"
+  },
+  "hostingPlanName": {
+    "value": "ServicePlan1"
+  },
+  "siteLocation": {
+    "value": "North Europe"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "23db3ed9-fbb4-458a-80b9-272877271e5b"
+  },
+  "resourceGroup": {
+    "value": "Dev"
+  }
+}
