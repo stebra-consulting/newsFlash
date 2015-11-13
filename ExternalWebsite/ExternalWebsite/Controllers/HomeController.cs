@@ -61,10 +61,20 @@ namespace ExternalWebsite.Controllers
 
             //var today = date.
             //var latest = today.AddHours(-validHours);
-            //var archivedNews = (from o in news where (int)o.Date < expiredDate select o);
 
+            List<StebraEntity> archivedNews = new List<StebraEntity>();
 
-            return View(news);
+            IEnumerable<StebraEntity> archivedNewsEnum = archivedNews;
+
+            archivedNewsEnum = (from o in news where Convert.ToDateTime(o.Date) < expiredDate select o);//does not work
+
+            //study this example
+            //var highScores = from student in students
+            //                 where student.ExamScores[exam] > score
+            //                 select new { Name = student.FirstName, Score = student.ExamScores[exam] };
+            //
+
+            return View(archivedNewsEnum);
         }
 
 
