@@ -19,14 +19,24 @@ namespace MRPNewsFlashWeb.Models
             this.Title = NewsEntry;
             this.Description = NewsDescription;
             this.Article = NewsArticle;
-            this.Date = NewsDate;
             this.Body = NewsBody;
+            this.Date = NewsDate; //"dd/mm/yyyy"
+
+            string ddmmyyyy_hhmmss = NewsDate;
+            string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0];
+            string dd = ddmmyyyy.Split('/')[0];
+            string mm = ddmmyyyy.Split('/')[1];
+            string yyyy = ddmmyyyy.Split('/')[2];
+            int yyyymmdd = int.Parse(yyyy + mm + dd);
+            this.IntDate = yyyymmdd;//int Date property as yyyymmdd for sort/query against list of this object
+
         }
 
         public string Description { get; set; }
         public string Article { get; set; }
         public string Title { get; set; }
-        public string Date { get; set; }
         public string Body { get; set; }
+        public string Date { get; set; }
+        public int IntDate { get; set; }
     }
 }
