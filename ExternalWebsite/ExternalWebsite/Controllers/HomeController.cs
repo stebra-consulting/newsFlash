@@ -18,8 +18,7 @@ namespace ExternalWebsite.Controllers
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
 
-
-            return View();
+            return View(freshNews);
         }
 
         public ActionResult About()
