@@ -48,9 +48,7 @@ namespace ExternalWebsite.Controllers
                 string mm = ddmmyyyy.Split('/')[1];
                 string yyyy = ddmmyyyy.Split('/')[2];
 
-                string validyyyymmdd = yyyy + mm + dd;
-
-                DateTime d = Convert.ToDateTime(validyyyymmdd);
+                string validyyyymmdd = yyyy +"-"+ mm +"-"+ dd;
 
                 item.Date = validyyyymmdd;
 
