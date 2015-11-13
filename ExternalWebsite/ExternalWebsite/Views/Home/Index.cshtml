@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List <ExternalWebsite.Models.StebraEntity>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -8,12 +10,14 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <h2>Newstitle</h2>
-        <p><i>2015-11-13, Article Article Article Article Article Article</i></p>
-        <p>
-            body body body body body body body body body body body body body body body body body body body body body body body body body body body body body body 
-        </p>
-        <p><a class="btn btn-default" href="newsID">view entry &raquo;</a></p>
-    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12">
+            <h2>@item.Title</h2>
+            <p><i>@item.Date @Html.Raw(item.Article)</i></p>
+            <p>
+                @Html.Raw(item.Body)
+            </p>
+        </div>
+    }
 </div>
