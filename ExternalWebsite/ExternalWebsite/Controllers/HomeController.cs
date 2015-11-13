@@ -38,41 +38,52 @@ namespace ExternalWebsite.Controllers
             //Make string item.Date sortable as an (int) and 
             //TASK: update item date string to make it valid as an inParameter in Convert.ToDateTime() AND sortable as an int
             //converts "08/11/2015 23:00:00" to "2015-11-08"
-            foreach (var item in news)
-            {
-                string ddmmyyyy_hhmmss = item.Date;
+            //foreach (var item in news)
+            //{
+            //    string ddmmyyyy_hhmmss = item.Date;
 
-                string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0]; 
+            //    string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0]; 
 
-                string dd = ddmmyyyy.Split('/')[0];
-                string mm = ddmmyyyy.Split('/')[1];
-                string yyyy = ddmmyyyy.Split('/')[2];
+            //    string dd = ddmmyyyy.Split('/')[0];
+            //    string mm = ddmmyyyy.Split('/')[1];
+            //    string yyyy = ddmmyyyy.Split('/')[2];
 
-                string validyyyymmdd = yyyy +"-"+ mm +"-"+ dd;
+            //    string validyyyymmdd = yyyy +"-"+ mm +"-"+ dd;
 
-                item.Date = validyyyymmdd;
+            //    item.Date = validyyyymmdd;
 
-            }
+            //}
 
-            string today = DateTime.Now.ToString("yyyy-MM-dd");
-            DateTime expiredDate = new DateTime();
-            expiredDate = Convert.ToDateTime(today);
-            expiredDate.AddMonths(-1);
+            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
 
-            //var today = date.
-            //var latest = today.AddHours(-validHours);
+            //decrease mm by one
+
+            
+            //today
+            string mmToday = yyyymmdd.Split('-')[1];
+
+            //todays Month
+            string mmExpired = (int.Parse(mmToday) - 1).ToString();
+
+            //Date One Month Ago
+            string expired = yyyymmdd.Replace(mmToday, mmExpired);
+
+            //integer (Date One Month Ago)
+            int intExpired = int.Parse(expired.Replace("-", ""));
+
 
             List<StebraEntity> archivedNews = new List<StebraEntity>();
 
             IEnumerable<StebraEntity> archivedNewsEnum = archivedNews;
 
-            archivedNewsEnum = (from o in news where Convert.ToDateTime(o.Date) < expiredDate select o);//does not work
+            //STILL DOES NOT WORK! arrrgh
+            //archivedNewsEnum = (from o in news where o.IntDate) < intExpired select o);
 
-            //study this example
+            //Example from google
             //var highScores = from student in students
             //                 where student.ExamScores[exam] > score
             //                 select new { Name = student.FirstName, Score = student.ExamScores[exam] };
-            //
+
 
             return View(archivedNewsEnum);
         }
