@@ -18,6 +18,9 @@ namespace ExternalWebsite.Controllers
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
 
+            //sort list descend by Dateprop
+            freshNews = freshNews.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
+
             return View(freshNews);
         }
 
