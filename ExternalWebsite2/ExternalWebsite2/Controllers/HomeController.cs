@@ -35,10 +35,20 @@ namespace ExternalWebsite2.Controllers
             //sort list descend by Dateprop
             news = SortByDateManager.LatestFirst(news);
 
-            //return news that is older than 1 month
-            news = SortByDateManager.ByMonth(news);
-
             return View(news);
+        }
+
+        [HttpGet]
+        public ActionResult Month(string yyyymm)
+        {
+            List<StebraEntity> news = new List<StebraEntity>();
+
+            //Get news from AzureTable
+            news = AzureManager.LoadNews();
+
+            news = SortByDateManager.ByMonth(news, yyyymm);
+
+            return View(news);       
         }
 
 

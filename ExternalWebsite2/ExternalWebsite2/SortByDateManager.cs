@@ -48,22 +48,12 @@ namespace ExternalWebsite2
         }
 
 
-        public static List<StebraEntity> ByMonth(List<StebraEntity> newsToSort)
+        public static List<StebraEntity> ByMonth(List<StebraEntity> newsToSort, string yyyymm)
         {
-            //today
-            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
+          
+            int dateStart = int.Parse(yyyymm + "01");
 
-            //todays Month
-            string mmToday = yyyymmdd.Split('-')[1];
-
-            //Last Month                          //1 month old
-            string mmExpired = (int.Parse(mmToday) - 1).ToString();
-
-            //Date Last Month
-            string expired = yyyymmdd.Replace(mmToday, mmExpired);
-
-            //integer (Date One Month Ago)
-            int intExpired = int.Parse(expired.Replace("-", ""));
+            int dateStop = int.Parse(yyyymm + "31");
 
 
             List<StebraEntity> listType = new List<StebraEntity>();
@@ -71,11 +61,14 @@ namespace ExternalWebsite2
             IEnumerable<StebraEntity> iEnumType = listType;
 
 
-            iEnumType = (from o in newsToSort where o.IntDate <= intExpired select o);
+            iEnumType = (from o in newsToSort where o.IntDate >= dateStart     //yymmdd
+                                                    && o.IntDate <= dateStop  //yymmdd
+                         select o);
 
             listType = iEnumType.ToList();
 
             return listType;
+
 
         }
     }
