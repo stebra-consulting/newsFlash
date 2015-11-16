@@ -4,10 +4,23 @@
     ViewBag.Title = "Home Page";
 }
 
-<div>
-    <h2>Archived News</h2>
+<div class="jumbotron">
+    <h1>Archived News</h1>
     <p class="lead">Introducing our nostalgic archived news</p>
 </div>
+
+<div id="sideBar">
+    <p><b>Archive by month</b></p>
+    <ul>
+        <li>@Html.ActionLink("November", "Month", new { monthNumber = 11 })</li>
+        <li>@Html.ActionLink("October", "Month", new { monthNumber = 10 })</li>
+        <li>@Html.ActionLink("September", "Month", new { monthNumber = 09 })</li>
+        <li>@Html.ActionLink("August", "Month", new { monthNumber = 08 })</li>
+        <li>@Html.ActionLink("July", "Month", new { monthNumber = 07 })</li>
+        <li>@Html.ActionLink("June", "Month", new { monthNumber = 06 })</li>
+    </ul>
+</div>
+
 
 <div class="row">
     @foreach (var item in Model)
