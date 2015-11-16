@@ -19,8 +19,8 @@ namespace ExternalWebsite.Controllers
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
 
-            //sortlist by latestFirst
-            freshNews = SortByDateManager.LatestFirst(freshNews);
+            //sort list descend by Dateprop
+            freshNews = freshNews.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
 
             return View(freshNews);
         }
@@ -33,12 +33,38 @@ namespace ExternalWebsite.Controllers
             news = AzureManager.LoadNews();
 
             //sort list descend by Dateprop
-            news = SortByDateManager.LatestFirst(news);
+            news = news.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
 
-            //return news that is older than 1 month
-            news = SortByDateManager.ByMonth(news);
+            //today
+            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
+            
+            //todays Month
+            string mmToday = yyyymmdd.Split('-')[1];
 
-            return View(news);
+            //Last Month
+            string mmExpired = (int.Parse(mmToday) - 1).ToString();
+
+            //Date Last Month
+            string expired = yyyymmdd.Replace(mmToday, mmExpired);
+
+            //integer (Date One Month Ago)
+            int intExpired = int.Parse(expired.Replace("-", ""));
+
+
+            List<StebraEntity> archivedNews = new List<StebraEntity>();
+
+            IEnumerable<StebraEntity> archivedNewsEnum = archivedNews;
+
+            //STILL DOES NOT WORK! arrrgh
+            //archivedNewsEnum = (from o in news where o.IntDate) < intExpired select o);
+
+            //Example from google
+            //var highScores = from student in students
+            //                 where student.ExamScores[exam] > score
+            //                 select new { Name = student.FirstName, Score = student.ExamScores[exam] };
+
+
+            return View(archivedNewsEnum);
         }
 
 
