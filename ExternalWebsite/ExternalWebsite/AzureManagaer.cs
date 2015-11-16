@@ -46,14 +46,14 @@ namespace ExternalWebsite
         public static CloudTable SelectValidTable()
         {
             CloudTable tempTable = null;
-            int id = 1;
+             
+            for (int id = 0; id < 2; id++)
+            {
+                tempTable = tableClient.GetTableReference(tableName + id.ToString());
+                if (tempTable.Exists()) break;
+            }
+             //check this tables
 
-            tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
-
-            if (tempTable.Exists()) break;
-            else id++;
-
-            tempTable = tableClient.GetTableReference(tableName + id.ToString());
             return tempTable;
         }
     }
