@@ -19,8 +19,8 @@ namespace ExternalWebsite.Controllers
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
 
-            //sort list descend by Dateprop
-            freshNews = freshNews.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
+            //sortlist by latestFirst
+            freshNews = SortByDateManager.LatestFirst(freshNews);
 
             return View(freshNews);
         }
@@ -33,32 +33,12 @@ namespace ExternalWebsite.Controllers
             news = AzureManager.LoadNews();
 
             //sort list descend by Dateprop
-            news = news.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
+            news = SortByDateManager.LatestFirst(news);
 
-            //today
-            string yyyymmdd = DateTime.Now.ToString("yyyy-MM-dd");
-            
-            //todays Month
-            string mmToday = yyyymmdd.Split('-')[1];
+            //return news that is older than 1 month
+            news = SortByDateManager.ByMonth(news);
 
-            //Last Month
-            string mmExpired = (int.Parse(mmToday) - 1).ToString();
-
-            //Date Last Month
-            string expired = yyyymmdd.Replace(mmToday, mmExpired);
-
-            //integer (Date One Month Ago)
-            int intExpired = int.Parse(expired.Replace("-", ""));
-
-
-            List<StebraEntity> archivedNews = new List<StebraEntity>();
-
-            IEnumerable<StebraEntity> archivedNewsEnum = archivedNews;
-
-
-            archivedNewsEnum = (from o in news where o.IntDate <= intExpired select o);
-
-            return View(archivedNewsEnum);
+            return View(news);
         }
 
 

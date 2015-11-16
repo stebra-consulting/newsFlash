@@ -208,6 +208,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StebraEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortByDateManager.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
