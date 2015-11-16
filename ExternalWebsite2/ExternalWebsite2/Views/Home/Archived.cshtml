@@ -11,9 +11,8 @@
 
 <div id="sideBar">
     <p><b>Archive by month</b></p>
-    
-    <ul>
-        2015
+    <p class="years" id="thisyear"> 2015  +</p>
+    <ul id="thisyearold">
         @*<li>@Html.ActionLink("December", "Month", new { yyyymm = "201512" })</li>*@
         <li>@Html.ActionLink("November", "Month", new { yyyymm = "201511" })</li>
         <li>@Html.ActionLink("October", "Month", new { yyyymm = "201510" })</li>
@@ -27,8 +26,9 @@
         <li>@Html.ActionLink("Februari", "Month", new { yyyymm = "201502" })</li>
         <li>@Html.ActionLink("Janaury", "Month", new { yyyymm = "201501" })</li>
     </ul>
-    <ul>
-        2014
+
+    <p class="years" id="oneyearbehind"> 2014  +</p>
+    <ul id="oneyearold">
         <li>@Html.ActionLink("December", "Month", new { yyyymm = "201412" })</li>
         <li>@Html.ActionLink("November", "Month", new { yyyymm = "201411" })</li>
         <li>@Html.ActionLink("October", "Month", new { yyyymm = "201410" })</li>
@@ -42,8 +42,9 @@
         <li>@Html.ActionLink("Februari", "Month", new { yyyymm = "201402" })</li>
         <li>@Html.ActionLink("Janaury", "Month", new { yyyymm = "201401" })</li>
     </ul>
-    <ul>
-        2013
+
+      <p class="years" id="twoyearsbehind">2013  +</p>
+    <ul id="twoyearsold">
         <li>@Html.ActionLink("December", "Month", new { yyyymm = "201312" })</li>
         <li>@Html.ActionLink("November", "Month", new { yyyymm = "201311" })</li>
         <li>@Html.ActionLink("October", "Month", new { yyyymm = "201310" })</li>
@@ -72,3 +73,19 @@
         </div>
     }
 </div>
+
+
+
+<script>
+    $("#thisyear").click(function () {
+        $("#thisyearold").toggle();
+    });
+
+    $("#oneyearbehind").click(function () {
+        $("#oneyearold").toggle();
+    });
+
+    $("#twoyearsbehind").click(function () {
+        $("#twoyearsold").toggle();
+    });
+</script>

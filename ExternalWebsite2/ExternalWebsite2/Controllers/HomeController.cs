@@ -19,6 +19,9 @@ namespace ExternalWebsite2.Controllers
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
 
+            //only give me news younger than 1 months
+            freshNews = SortByDateManager.NewsYoungerThanMonths(freshNews, 1);
+
             //sortlist by latestFirst
             freshNews = SortByDateManager.LatestFirst(freshNews);
 

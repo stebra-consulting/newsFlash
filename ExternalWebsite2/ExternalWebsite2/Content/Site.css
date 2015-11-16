@@ -26,3 +26,18 @@ textarea {
     color:black;
 
 }
+
+.years {
+
+    background-color:gray;
+    width:120px;
+
+}
+
+#oneyearold {
+display:none;
+}
+
+#twoyearsold {
+display:none;
+}
