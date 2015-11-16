@@ -10,11 +10,13 @@ namespace ExternalWebsite2
     {
         public static List<StebraEntity> LatestFirst(List<StebraEntity> newsToSort)
         {
-            //sort list descending by Dateprop
-            newsToSort = newsToSort.OrderByDescending(item => Convert.ToDateTime(item.Date)).ToList();
+
+            newsToSort = newsToSort.OrderByDescending(o => o.IntDate).ToList();
 
             return newsToSort;
+
         }
+
 
         public static List<StebraEntity> ByMonth(List<StebraEntity> newsToSort)
         {
