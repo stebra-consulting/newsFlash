@@ -16,3 +16,13 @@ textarea {
     max-width: 280px;
 }
 
+
+#sideBar {
+
+    
+    position:absolute;
+    top:100px; bottom:0; left:150px;
+    width:250px;
+    color:black;
+
+}
