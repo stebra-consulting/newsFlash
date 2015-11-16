@@ -17,7 +17,7 @@ namespace ExternalWebsite
         private const string tableName = "stebraNyhetslist";
         private const string partitionKey = "Nyhet";
 
-                    //Connection to Azure Storage
+        //Connection to Azure Storage
         private static CloudStorageAccount StorageAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
@@ -46,20 +46,14 @@ namespace ExternalWebsite
         public static CloudTable SelectValidTable()
         {
             CloudTable tempTable = null;
-            int id = 0;
-            while (true)//this does not feel entirely smooth.
-            {
-                tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
-                if (tempTable.Exists())
-                {
-                    //tempTable.Create();
-                    break;
-                }
-                else
-                {
-                    id++;
-                }
-            }
+            int id = 1;
+
+            tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
+
+            if (tempTable.Exists()) break;
+            else id++;
+
+            tempTable = tableClient.GetTableReference(tableName + id.ToString());
             return tempTable;
         }
     }
