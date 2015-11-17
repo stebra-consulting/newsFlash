@@ -5,42 +5,32 @@ using System.Linq;
 using System.Web;
 namespace ExternalWebsite2
 {
-    public class LinkManager
+    public static class LinkManager
     {
-        public static bool LinkExists(string mm)
+        public static List<StebraEntity> globalNews { get; set; }
+
+        public static string LinkText(string mm, int intYear)
         {
+            //string mm = intMonth.ToString();
+            //if (mm.Length == 1) { mm = "0" + mm; }
 
-
-
-            //List to hold news
-            List<StebraEntity> news = new List<StebraEntity>();
-
-            //Get ALL news from AzureTable
-            news = AzureManager.LoadNews();
-
-            //sortlist by latestFirst
-            news = SortByDateManager.LatestFirst(news);
+            string yyyy = intYear.ToString();
 
             int count = 0;
 
-            foreach (var o in news)
+            foreach (var o in globalNews)
             {
-                string strDate = o.IntDate.ToString();
-                string mmDate = strDate.Substring(3, 5);
-                if (mmDate == mm)
+                string strDate = o.IntDate.ToString();      //"20150909"
+                string mmDate = strDate.Substring(4, 2);    //"09"
+                string yyyyDate = strDate.Substring(0, 4);  //"2015"
+                if (mmDate == mm && yyyyDate == yyyy)
                 {
                     count++;
                 }
-
-                //intDate example 20150909
-
             }
 
-            return false;
-        }
+            if (count == 0) { return ""; } //cancel execution, there is no news to fetch
 
-        public static string LinkText(string mm)
-        {
             string month = "";
 
             switch (mm)
@@ -54,13 +44,13 @@ namespace ExternalWebsite2
                 case "07": month = "July"; break;
                 case "08": month = "August"; break;
                 case "09": month = "September"; break;
-                case "10": month = "Octoboer"; break;
+                case "10": month = "October"; break;
                 case "11": month = "November"; break;
                 case "12": month = "December"; break;
                 default: break;
             }
 
-            return "Hello";
+            return month + " (" + count + ")";
         }
     }
 }
