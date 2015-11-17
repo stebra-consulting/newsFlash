@@ -47,7 +47,7 @@ namespace ExternalWebsite2
         {
             CloudTable tempTable = null;
 
-            for (int id = 0; id < 2; id++)
+            for (int id = 0; id < 10; id++)
             {
                 tempTable = tableClient.GetTableReference(tableName + id.ToString());
                 if (tempTable.Exists()) break;
