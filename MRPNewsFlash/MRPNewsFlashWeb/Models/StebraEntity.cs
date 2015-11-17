@@ -25,7 +25,15 @@ namespace MRPNewsFlashWeb.Models
             string ddmmyyyy_hhmmss = NewsDate;
             string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0];
             string dd = ddmmyyyy.Split('/')[0];
+            if (dd.Length == 1)
+            {
+                dd = "0" + dd;
+            }
             string mm = ddmmyyyy.Split('/')[1];
+            if (mm.Length == 1)
+            {
+                mm = "0" + mm;
+            }
             string yyyy = ddmmyyyy.Split('/')[2];
             int yyyymmdd = int.Parse(yyyy + mm + dd);
             this.IntDate = yyyymmdd;//int Date property as yyyymmdd for sort/query against list of this object
