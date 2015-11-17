@@ -16,14 +16,14 @@ namespace MRPNewsFlashWeb.Controllers
         [SharePointContextFilter]
         public ActionResult Index()
         {
-            
+
             //SPManager.CurrentHttpContext = HttpContext;
             //ListItemCollection items = SPManager.GetItemCollection("Nyhetslista");
 
             //string FileLeafRef = "peter_okt.jpg";
             //using (var fileStream = SPManager.GetImage(FileLeafRef))
             //{
-                
+
             //    AzureManager.CreateBlob(fileStream, "ImageFromStream");
             //}
 
@@ -32,26 +32,38 @@ namespace MRPNewsFlashWeb.Controllers
 
         public ActionResult Publish()
         {//catch Ribbon action URL Parametr
-
-            string listGuid = Request.QueryString["SPListId"];
-
-            SPManager.CurrentHttpContext = HttpContext;
-            ListItemCollection items = SPManager.GetItemsFromGuid(listGuid);
-
-            List<ListItem> stebraList = new List<ListItem>();
-
-            foreach (ListItem item in items)
+            var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
+            if (spContext != null)
             {
-                ListItem scannedItem = StringScanner.ScanningListItem(item);
-                stebraList.Add(scannedItem);
+                string listGuid = Request.QueryString["SPListId"];
+
+                SPManager.CurrentHttpContext = HttpContext;
+                ListItemCollection items = SPManager.GetItemsFromGuid(listGuid);
+
+                List<ListItem> stebraList = new List<ListItem>();
+
+                foreach (ListItem item in items)
+                {
+                    ListItem scannedItem = StringScanner.ScanningListItem(item);
+                    stebraList.Add(scannedItem);
+                }
+
+                AzureManager.CreateTable(stebraList);
+                ViewBag.Status = "Success. Newslist have been published to: " + AzureManager.tableName + " in Azure Storage";
             }
 
-            AzureManager.CreateTable(stebraList);
+            else
+            {
+                ViewBag.Status = "Too many requests in queue. Please try again later.";
+            }
 
             //done
 
+
             return View();
+
         }
+
         public ActionResult About()
         {
             //not yet implemented
