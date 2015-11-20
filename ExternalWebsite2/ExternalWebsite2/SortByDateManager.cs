@@ -61,8 +61,10 @@ namespace ExternalWebsite2
             IEnumerable<StebraEntity> iEnumType = listType;
 
 
-            iEnumType = (from o in newsToSort where o.IntDate >= dateStart     //yymmdd
-                                                    && o.IntDate <= dateStop  //yymmdd
+            iEnumType = (from o in newsToSort where 
+                         o.IntDate >= dateStart 
+                         && 
+                         o.IntDate <= dateStop
                          select o);
 
             listType = iEnumType.ToList();
