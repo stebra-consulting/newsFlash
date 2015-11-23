@@ -9,58 +9,6 @@
     <p class="lead">Introducing our nostalgic archived news</p>
 </div>
 
-<div id="sideBar">
-    <p><b>Archive by month</b></p>
-    <p class="years" id="thisyear"> 2015  +</p>
-    <ul id="thisyearold">
-        @*<li>@Html.ActionLink("December", "Month", new { yyyymm = "201512" })</li>*@
-        <li>@Html.ActionLink("November", "Month", new { yyyymm = "201511" })</li>
-        <li>@Html.ActionLink("October", "Month", new { yyyymm = "201510" })</li>
-        <li>@Html.ActionLink("September", "Month", new { yyyymm = "201509" })</li>
-        <li>@Html.ActionLink("August", "Month", new { yyyymm = "201508" })</li>
-        <li>@Html.ActionLink("July", "Month", new { yyyymm = "201507" })</li>
-        <li>@Html.ActionLink("June", "Month", new { yyyymm = "201506" })</li>
-        <li>@Html.ActionLink("May", "Month", new { yyyymm = "201505" })</li>
-        <li>@Html.ActionLink("April", "Month", new { yyyymm = "201504" })</li>
-        <li>@Html.ActionLink("March", "Month", new { yyyymm = "201503" })</li>
-        <li>@Html.ActionLink("Februari", "Month", new { yyyymm = "201502" })</li>
-        <li>@Html.ActionLink("Janaury", "Month", new { yyyymm = "201501" })</li>
-    </ul>
-
-    <p class="years" id="oneyearbehind"> 2014  +</p>
-    <ul id="oneyearold">
-        <li>@Html.ActionLink("December", "Month", new { yyyymm = "201412" })</li>
-        <li>@Html.ActionLink("November", "Month", new { yyyymm = "201411" })</li>
-        <li>@Html.ActionLink("October", "Month", new { yyyymm = "201410" })</li>
-        <li>@Html.ActionLink("September", "Month", new { yyyymm = "201409" })</li>
-        <li>@Html.ActionLink("August", "Month", new { yyyymm = "201408" })</li>
-        <li>@Html.ActionLink("July", "Month", new { yyyymm = "201407" })</li>
-        <li>@Html.ActionLink("June", "Month", new { yyyymm = "201406" })</li>
-        <li>@Html.ActionLink("May", "Month", new { yyyymm = "201405" })</li>
-        <li>@Html.ActionLink("April", "Month", new { yyyymm = "201404" })</li>
-        <li>@Html.ActionLink("March", "Month", new { yyyymm = "201403" })</li>
-        <li>@Html.ActionLink("Februari", "Month", new { yyyymm = "201402" })</li>
-        <li>@Html.ActionLink("Janaury", "Month", new { yyyymm = "201401" })</li>
-    </ul>
-
-      <p class="years" id="twoyearsbehind">2013  +</p>
-    <ul id="twoyearsold">
-        <li>@Html.ActionLink("December", "Month", new { yyyymm = "201312" })</li>
-        <li>@Html.ActionLink("November", "Month", new { yyyymm = "201311" })</li>
-        <li>@Html.ActionLink("October", "Month", new { yyyymm = "201310" })</li>
-        <li>@Html.ActionLink("September", "Month", new { yyyymm = "201309" })</li>
-        <li>@Html.ActionLink("August", "Month", new { yyyymm = "201308" })</li>
-        <li>@Html.ActionLink("July", "Month", new { yyyymm = "201307" })</li>
-        <li>@Html.ActionLink("June", "Month", new { yyyymm = "201306" })</li>
-        <li>@Html.ActionLink("May", "Month", new { yyyymm = "201305" })</li>
-        <li>@Html.ActionLink("April", "Month", new { yyyymm = "201304" })</li>
-        <li>@Html.ActionLink("March", "Month", new { yyyymm = "201303" })</li>
-        <li>@Html.ActionLink("Februari", "Month", new { yyyymm = "201302" })</li>
-        <li>@Html.ActionLink("Janaury", "Month", new { yyyymm = "201301" })</li>
-    </ul>
-</div>
-
-
 <div class="row">
     @foreach (var item in Model)
     {
@@ -73,19 +21,3 @@
         </div>
     }
 </div>
-
-
-
-<script>
-    $("#thisyear").click(function () {
-        $("#thisyearold").toggle();
-    });
-
-    $("#oneyearbehind").click(function () {
-        $("#oneyearold").toggle();
-    });
-
-    $("#twoyearsbehind").click(function () {
-        $("#twoyearsold").toggle();
-    });
-</script>

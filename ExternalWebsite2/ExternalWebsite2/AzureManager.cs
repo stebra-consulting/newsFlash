@@ -36,6 +36,12 @@ namespace ExternalWebsite2
             //Entities to List
             var news = table.ExecuteQuery(allNewsQuery).ToList();
 
+            if (LinkManager.globalNews == null)
+            {
+                LinkManager.globalNews = news;
+
+            }
+
             //Return List
             return news;
 

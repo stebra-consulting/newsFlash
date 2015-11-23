@@ -12,7 +12,8 @@ namespace Test1Web.Controllers
         [SharePointContextFilter]
         public ActionResult Index()
         {
-            User spUser = null; System.Console.WriteLine("random");
+            //Hello Felix
+            User spUser = null;
 
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
 

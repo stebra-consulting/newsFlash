@@ -1,13 +1,4 @@
-﻿@model List<ExternalWebsite2.Models.StebraEntity>
-@using ExternalWebsite2.Models
-
-@{
-    int year = DateTime.Now.Year;
-    ViewBag.Title = "Home Page";
-
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,7 +20,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-               
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -42,13 +33,34 @@
 
     <div class="container body-content">
         @RenderBody()
+        <div id="sideBar">
+            <p><b>Archive by month</b></p>
+
+            @{int thisYear = DateTime.Now.Year;}
+
+            @for (int year = 0; year < 3; year++)
+            {
+                int currentYear = thisYear - year;
+                    <p class="years" id="test">@currentYear  +</p>
+                    <ul id="linkTree">
+                        @{string[] months = new[] { "12", "11", "10", "09", "08", "07", "06", "05", "04", "03", "02", "01" };}
+                        @foreach (var month in months)
+                        {
+                            string linkText = LinkManager.LinkText(month, currentYear);
+                            if (linkText.Length > 0)
+                            {
+                                <li> @Html.ActionLink(linkText, "Month", new { yyyymm = currentYear.ToString() + month }) </li>
+                            }
+                        }
+                    </ul>
+                            }
+
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-
     <script>
     $("#thisyear").click(function () {
         $("#thisyearold").toggle();
