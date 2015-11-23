@@ -3,7 +3,7 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="MRPNewsFlash"
      ProductID="{ebd58cae-ac67-45ce-9c06-afc8d92e1953}"
-     Version="1.0.0.3"
+     Version="1.0.0.5"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
