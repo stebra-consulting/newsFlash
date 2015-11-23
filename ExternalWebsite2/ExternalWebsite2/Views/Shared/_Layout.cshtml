@@ -1,13 +1,4 @@
-﻿@model List<ExternalWebsite2.Models.StebraEntity>
-@using ExternalWebsite2.Models
-
-@{
-    int year = DateTime.Now.Year;
-    ViewBag.Title = "Home Page";
-
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,7 +20,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-               
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -44,152 +35,32 @@
         @RenderBody()
         <div id="sideBar">
             <p><b>Archive by month</b></p>
-            <p class="years" id="thisyear"> @(year) +</p>
-            <ul id="thisyearold">
-                @if (Global.sidebar("12", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("12", year), "Month", new { yyyymm = year + "12" })</li>}
-                @if (Global.sidebar("11", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("11", year), "Month", new { yyyymm = year + "11" })</li>}
-                @if (Global.sidebar("10", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("10", year), "Month", new { yyyymm = year + "10" })</li>}
-                @if (Global.sidebar("09", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("09", year), "Month", new { yyyymm = year + "09" })</li>}
-                @if (Global.sidebar("08", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("08", year), "Month", new { yyyymm = year + "08" })</li>}
-                @if (Global.sidebar("07", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("07", year), "Month", new { yyyymm = year + "07" })</li>}
-                @if (Global.sidebar("06", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("06", year), "Month", new { yyyymm = year + "06" })</li>}
-                @if (Global.sidebar("05", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("05", year), "Month", new { yyyymm = year + "05" })</li>}
-                @if (Global.sidebar("04", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("04", year), "Month", new { yyyymm = year + "04" })</li>}
-                @if (Global.sidebar("03", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("03", year), "Month", new { yyyymm = year + "03" })</li>}
-                @if (Global.sidebar("02", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("02", year), "Month", new { yyyymm = year + "02" })</li>}
-                @if (Global.sidebar("01", year) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("01", year), "Month", new { yyyymm = year + "01" })</li> }
 
-            </ul>
+            @{int thisYear = DateTime.Now.Year;}
 
-            <p class="years" id="oneyearbehind"> @(year - 1)  +</p>
-            <ul id="oneyearold">
-                @if (Global.sidebar("12", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("12", year - 1), "Month", new { yyyymm = year - 1 + "12" })</li>}
-                @if (Global.sidebar("11", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("11", year - 1), "Month", new { yyyymm = year - 1 + "11" })</li>}
-                @if (Global.sidebar("10", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("10", year - 1), "Month", new { yyyymm = year - 1 + "10" })</li>}
-                @if (Global.sidebar("09", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("09", year - 1), "Month", new { yyyymm = year - 1 + "09" })</li>}
-                @if (Global.sidebar("08", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("08", year - 1), "Month", new { yyyymm = year - 1 + "08" })</li>}
-                @if (Global.sidebar("07", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("07", year - 1), "Month", new { yyyymm = year - 1 + "07" })</li>}
-                @if (Global.sidebar("06", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("06", year - 1), "Month", new { yyyymm = year - 1 + "06" })</li>}
-                @if (Global.sidebar("05", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("05", year - 1), "Month", new { yyyymm = year - 1 + "05" })</li>}
-                @if (Global.sidebar("04", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("04", year - 1), "Month", new { yyyymm = year - 1 + "04" })</li>}
-                @if (Global.sidebar("03", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("03", year - 1), "Month", new { yyyymm = year - 1 + "03" })</li>}
-                @if (Global.sidebar("02", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("02", year - 1), "Month", new { yyyymm = year - 1 + "02" })</li>}
-                @if (Global.sidebar("01", year - 1) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("01", year - 1), "Month", new { yyyymm = year - 1 + "01" })</li>}
-            </ul>
-
-            <p class="years" id="twoyearsbehind">@(year - 2)  +</p>
-            <ul id="twoyearsold">
-                @if (Global.sidebar("12", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("12", year - 2), "Month", new { yyyymm = year - 2 + "12" })</li>}
-                @if (Global.sidebar("11", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("11", year - 2), "Month", new { yyyymm = year - 2 + "11" })</li>}
-                @if (Global.sidebar("10", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("10", year - 2), "Month", new { yyyymm = year - 2 + "10" })</li>}
-                @if (Global.sidebar("09", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("09", year - 2), "Month", new { yyyymm = year - 2 + "09" })</li>}
-                @if (Global.sidebar("08", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("08", year - 2), "Month", new { yyyymm = year - 2 + "08" })</li>}
-                @if (Global.sidebar("07", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("07", year - 2), "Month", new { yyyymm = year - 2 + "07" })</li>}
-                @if (Global.sidebar("06", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("06", year - 2), "Month", new { yyyymm = year - 2 + "06" })</li>}
-                @if (Global.sidebar("05", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("05", year - 2), "Month", new { yyyymm = year - 2 + "05" })</li>}
-                @if (Global.sidebar("04", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("04", year - 2), "Month", new { yyyymm = year - 2 + "04" })</li>}
-                @if (Global.sidebar("03", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("03", year - 2), "Month", new { yyyymm = year - 2 + "03" })</li>}
-                @if (Global.sidebar("02", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("02", year - 2), "Month", new { yyyymm = year - 2 + "02" })</li>}
-                @if (Global.sidebar("01", year - 2) != null)
-                {
-        <li>@Html.ActionLink(Global.sidebar("01", year - 2), "Month", new { yyyymm = year - 2 + "01" })</li>}
-            </ul>
-
-
-
+            @for (int year = 0; year < 3; year++)
+            {
+                int currentYear = thisYear - year;
+                <p class="years" id="test">@currentYear  +</p>
+                <ul id="linkTree">
+                    @{string[] months = new[] { "12", "11", "10", "09", "08", "07", "06", "05", "04", "03", "02", "01" };}
+                    @foreach (var month in months)
+                    {
+                        string linkText = LinkManager.LinkText(month, currentYear);
+                        if (linkText.Length > 0)
+                        {
+                            <li> @Html.ActionLink(linkText, "Month", new { yyyymm = currentYear.ToString() + month }) </li>
+                        }
+                    }
+                </ul>
+             }
 
         </div>
-
-
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
-
-    <script>
-    $("#thisyear").click(function () {
-        $("#thisyearold").toggle();
-    });
-
-    $("#oneyearbehind").click(function () {
-        $("#oneyearold").toggle();
-    });
-
-    $("#twoyearsbehind").click(function () {
-        $("#twoyearsold").toggle();
-    });
-    </script>
 </body>
 </html>
