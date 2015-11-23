@@ -22,7 +22,7 @@
     <WorkflowPartId>{30096635-70a4-4591-b6d6-af00943e92b7}</WorkflowPartId>
     <CspkgPartId>{a4dd533d-2cf0-4f38-81d0-d72ca1935be6}</CspkgPartId>
     <SqlPackagePartId>{4c3f9b28-cc15-4c10-8006-2016c06ab48f}</SqlPackagePartId>
-    <ActivePublishProfile>TestApp01Ste - Web Deploy</ActivePublishProfile>
+    <ActivePublishProfile>testingsplist - Web Deploy</ActivePublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
