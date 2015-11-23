@@ -3,16 +3,16 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="MRPNewsFlash"
      ProductID="{ebd58cae-ac67-45ce-9c06-afc8d92e1953}"
-     Version="1.0.0.3"
+     Version="1.0.0.4"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
     <Title>MRPNewsFlash</Title>
-    <StartPage>http://mrpappnewsflash.azurewebsites.net/?{StandardTokens}</StartPage>
+    <StartPage>http://ribbonflash.azurewebsites.net/?{StandardTokens}</StartPage>
   </Properties>
 
   <AppPrincipal>
-    <RemoteWebApplication ClientId="20b62423-8bc3-4e2f-ba86-86e679e9b318" />
+    <RemoteWebApplication ClientId="*" />
   </AppPrincipal>
   <AppPermissionRequests>
     <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="Read" />
