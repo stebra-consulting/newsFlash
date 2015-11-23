@@ -8,7 +8,7 @@
 >
   <Properties>
     <Title>Testing1</Title>
-    <StartPage>https://testingsplist.azurewebsites.net/?{StandardTokens}</StartPage>
+    <StartPage>https://testapp01ste.azurewebsites.net/?{StandardTokens}</StartPage>
   </Properties>
 
   <AppPrincipal>
