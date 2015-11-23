@@ -13,7 +13,7 @@ namespace MRPNewsFlashWeb.Controllers
 {
     public class HomeController : Controller
     {
-        [SharePointContextFilter]
+        
         public ActionResult Index()
         {
 
@@ -29,7 +29,7 @@ namespace MRPNewsFlashWeb.Controllers
 
             return View();
         }
-
+        [SharePointContextFilter]
         public ActionResult Publish()
         {//catch Ribbon action URL Parametr
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
