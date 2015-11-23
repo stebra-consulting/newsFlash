@@ -22,7 +22,7 @@ namespace Testing1Web.Controllers
             Uri hostWeb = new Uri("https://stebra.sharepoint.com/sites/SD1");
             string appOnlyAccessToken = TokenHelper.GetS2SAccessTokenWithWindowsIdentity(hostWeb, null);
 
-            var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
+            //var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
 
             using (ClientContext clientContext = TokenHelper.GetClientContextWithAccessToken(hostWeb.ToString(), appOnlyAccessToken))
             {

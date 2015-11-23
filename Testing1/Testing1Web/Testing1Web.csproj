@@ -212,6 +212,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\TestApp01Ste - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\TestApp01Ste - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\testingsplist - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\testingsplist - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

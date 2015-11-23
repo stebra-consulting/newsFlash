@@ -12,18 +12,18 @@ namespace ExternalWebsite2.Controllers
     {
         public ActionResult Index()
         {
+
             //List to hold news
             List<StebraEntity> freshNews = new List<StebraEntity>();
 
             //Get news from AzureTable
             freshNews = AzureManager.LoadNews();
-           
-            //sortlist by latestFirst
-            freshNews = SortByDateManager.LatestFirst(freshNews);
-            LinkManager.globalNews = freshNews;
 
             //only give me news younger than 1 months
             freshNews = SortByDateManager.NewsYoungerThanMonths(freshNews, 1);
+
+            //sortlist by latestFirst
+            freshNews = SortByDateManager.LatestFirst(freshNews);
 
             return View(freshNews);
         }
@@ -37,7 +37,6 @@ namespace ExternalWebsite2.Controllers
 
             //sort list descend by Dateprop
             news = SortByDateManager.LatestFirst(news);
-
 
             return View(news);
         }

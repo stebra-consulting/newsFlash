@@ -3,16 +3,16 @@
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="Testing1"
      ProductID="{9f3e8128-b8a9-423f-ae14-be53ac78733d}"
-     Version="1.0.0.4"
+     Version="1.0.0.5"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
     <Title>Testing1</Title>
-    <StartPage>~remoteAppUrl/?{StandardTokens}</StartPage>
+    <StartPage>https://testapp01ste.azurewebsites.net/?{StandardTokens}</StartPage>
   </Properties>
 
   <AppPrincipal>
-    <RemoteWebApplication ClientId="da776fd3-080a-413b-82eb-52aebf227034" />
+    <RemoteWebApplication ClientId="951cad55-1b5a-44ee-8f68-f40ceedd7a08" />
   </AppPrincipal>
   <AppPermissionRequests AllowAppOnlyPolicy="true">
     <AppPermissionRequest Scope="http://sharepoint/content/sitecollection/web" Right="Read" />

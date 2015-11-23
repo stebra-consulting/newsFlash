@@ -9,7 +9,7 @@ namespace Testing1Web.Controllers
 {
     public class HomeController : Controller
     {
-      
+        [SharePointContextFilter]
         public ActionResult Index()
         {
             User spUser = null;
@@ -39,8 +39,6 @@ namespace Testing1Web.Controllers
 
         public ActionResult About()
         {
-            var context = HttpContext;
-            var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
             ViewBag.Message = "Your application description page.";
 
             return View();
