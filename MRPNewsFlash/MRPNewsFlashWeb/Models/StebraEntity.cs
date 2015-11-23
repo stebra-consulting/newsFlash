@@ -22,11 +22,19 @@ namespace MRPNewsFlashWeb.Models
             this.Body = NewsBody;
             this.Date = NewsDate; //"dd/mm/yyyy"
 
-            string ddmmyyyy_hhmmss = NewsDate;
-            string ddmmyyyy = ddmmyyyy_hhmmss.Split(' ')[0];
-            string dd = ddmmyyyy.Split('/')[0];
-            string mm = ddmmyyyy.Split('/')[1];
-            string yyyy = ddmmyyyy.Split('/')[2];
+            string mmddyyyy_hhmmss = NewsDate;
+            string mmddyyyy = mmddyyyy_hhmmss.Split(' ')[0];
+            string mm = mmddyyyy.Split('/')[0];
+            if (mm.Length == 1)
+            {
+                mm = "0" + mm;
+            }
+            string dd = mmddyyyy.Split('/')[1];
+            if (dd.Length == 1)
+            {
+                dd = "0" + dd;
+            }
+            string yyyy = mmddyyyy.Split('/')[2];
             int yyyymmdd = int.Parse(yyyy + mm + dd);
             this.IntDate = yyyymmdd;//int Date property as yyyymmdd for sort/query against list of this object
 

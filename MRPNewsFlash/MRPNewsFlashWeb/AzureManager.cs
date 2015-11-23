@@ -15,7 +15,7 @@ namespace MRPNewsFlashWeb
     {
         //Config
         const string containerName = "photos";
-        const string tableName = "stebraNyhetslist";
+        public const string tableName = "stebraNyhetslist";
 
         //Connection to Azure Storage
         private static CloudStorageAccount StorageAccount = CloudStorageAccount.Parse(
@@ -70,24 +70,67 @@ namespace MRPNewsFlashWeb
         public static CloudTable SelectTable()
         {
             CloudTable tempTable = null;
-            int id = 0;
-            while (true)//this does not feel entirely smooth.
+            //int id = 0;
+
+            //delete bord tills du hittar en tom slot
+            int emptyId = 0;
+
+            for (int id = 0; id < 10; id++)
             {
-                tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
-                if (tempTable.Exists())
+                tempTable = tableClient.GetTableReference(tableName + id.ToString()); //fetch table
+
+                if (!tempTable.Exists())
                 {
-                    tempTable.Delete(); //delete busy table
-                    id++;
+                    emptyId = id;
+                    break;
                 }
                 else
                 {
-                    tempTable.Create();
-                    //Table = tempTable; //use this table
-                    break;
+                    tempTable.Delete();
                 }
             }
+
+            //skapa ett bord på det tomma slottet
+            tempTable.Create();
+
+            //returnera det bordet
             return tempTable;
+
         }
+
     }
 
 }
+
+//while (id <= 2)
+//{
+//    tempTable = tableClient.GetTableReference(tableName + id.ToString()); //check this table
+
+//    if (!tempTable.Exists())
+//    {
+//        tempTable.Create();
+
+//        break;
+//    }
+//    else if (tempTable.Exists())
+//    {
+//        tempTable.DeleteIfExists(); //delete busy table
+
+//    }
+//    id++;
+//}
+//return tempTable;
+
+//        public static CloudTable SelectValidTable()
+//{
+//    CloudTable tempTable = null;
+
+//    for (int id = 0; id< 2; id++)
+//    {
+//        tempTable = tableClient.GetTableReference(tableName + id.ToString());
+//        if (tempTable.Exists()) break;
+//    }
+//    //check this tables
+
+//    return tempTable;
+//}

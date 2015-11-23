@@ -22,6 +22,7 @@
     <WorkflowPartId>{a610c4ca-197a-46f5-bd76-368ecd0c2b00}</WorkflowPartId>
     <CspkgPartId>{9b88d858-10a1-46ea-b3b2-c4e8c29c2378}</CspkgPartId>
     <SqlPackagePartId>{13eb35fc-613f-4071-b93e-d1f592714ba2}</SqlPackagePartId>
+    <ActivePublishProfile>MRPAppNewsFlash - Web Deploy</ActivePublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
