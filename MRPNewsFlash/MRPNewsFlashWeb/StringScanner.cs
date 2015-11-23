@@ -44,7 +44,7 @@ namespace MRPNewsFlashWeb
                     string azureUrl = AzureManager.ExportImage(importedFile, fileName);     //return a url when throwing in a file into AzureManager
                     if (azureUrl != null)
                     {
-                        newColumn = ReplaceURLInColumn(url, azureUrl, column);
+                        newColumn = ReplaceURLInColumn(url, azureUrl, newColumn);
                     }
                 }
             }
