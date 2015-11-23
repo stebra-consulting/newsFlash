@@ -14,6 +14,7 @@ namespace Test1Web.Controllers
         {
             //Hello Felix
             User spUser = null;
+            //bajs
 
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
 
