@@ -13,6 +13,7 @@ namespace Test1Web.Controllers
         public ActionResult Index()
         {
             //Hello Felix
+            //Test this...
             User spUser = null;
 
             var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
